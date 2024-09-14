@@ -26,7 +26,7 @@ export default function SecretPhrase({ secretPhrase }: Props) {
         let timer;
         clearTimeout(timer)
         setCopied(true)
-        navigator.clipboard.writeText(secretPhrase.join(''))
+        navigator.clipboard.writeText(secretPhrase.join(' '))
         setTimeout(() => {
             setCopied(false)
         }, 3000)
