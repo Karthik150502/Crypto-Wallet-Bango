@@ -1,17 +1,21 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
-
 import { Wallet } from "../types/wallet"
 
 
 
 type WalletStore = {
     wallets: Wallet[],
-    addWallet: () => void,
+    addWallet: (publicKey: string, privateKey: string, name: string) => void,
     deleteWallets: () => void,
     deleteWallet: (id: string) => void,
 }
 
+
+type MnenmonicStore = {
+    mnemonic: string,
+    editMnemonic: (mnemonic: string) => void,
+    eraseMnemonic: () => void,
+}
 
 
 const walletStore = (set: any) => ({
@@ -43,5 +47,5 @@ const mnemonicStore = (set: any) => ({
 
 
 
-export const useWalletStore = create(walletStore);
-export const useMnemonicStore = create(mnemonicStore);
+export const useWalletStore = create<WalletStore>()(walletStore);
+export const useMnemonicStore = create<MnenmonicStore>()(mnemonicStore);
