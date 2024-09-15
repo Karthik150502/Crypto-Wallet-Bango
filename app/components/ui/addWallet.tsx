@@ -22,6 +22,20 @@ import { getPublicKeyMnemonicEther } from '@/lib/ethers';
 import { Input } from '@/components/ui/input';
 import { Toaster } from "@/components/ui/toaster";
 import Link from 'next/link';
+
+
+
+import { getSolBalance } from '@/app/api/solana';
+
+
+
+
+
+
+
+
+
+
 export default function AddWallet() {
     const toast = useToast();
     const { mnemonic, editMnemonic } = useMnemonicStore();
@@ -33,11 +47,16 @@ export default function AddWallet() {
 
 
 
-    const createWallet = () => {
+    const createWallet = async () => {
 
         try {
             const { publicKey, privateKey } = getPublicKeyMnemonicSolana(mnemonic, wallets.length + 1);
-            addWallet(publicKey, privateKey, walletName)
+
+            let walletInfo = await getSolBalance(publicKey);
+            console.log(walletInfo)
+
+
+            addWallet(publicKey, privateKey, walletName, walletInfo.value)
             toast.toast({
                 title: `Created wallet ${walletName}`,
                 variant: "default"

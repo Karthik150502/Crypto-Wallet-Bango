@@ -93,7 +93,7 @@ export default function LandingHero() {
 
             {
                 wallets && walletCreated && wallets.map((wallet) => {
-                    return <WalletComp publicKey={wallet?.publicKey} privateKey={wallet?.privateKey} name={wallet.name} id={wallet.id} />
+                    return <WalletComp key={wallet.publicKey} WalletInfo={wallet} />
                 })
             }
         </div >

@@ -5,7 +5,7 @@ import { Wallet } from "../types/wallet"
 
 type WalletStore = {
     wallets: Wallet[],
-    addWallet: (publicKey: string, privateKey: string, name: string) => void,
+    addWallet: (publicKey: string, privateKey: string, name: string, balance: number) => void,
     deleteWallets: () => void,
     deleteWallet: (id: string) => void,
 }
@@ -20,8 +20,8 @@ type MnenmonicStore = {
 
 const walletStore = (set: any) => ({
     wallets: [],
-    addWallet: (publicKey: string, privateKey: string, name: string,) => set((store: any) => ({
-        wallets: [...store.wallets, { publicKey, privateKey, name, id: store.wallets.length + 1 }]
+    addWallet: (publicKey: string, privateKey: string, name: string, balance: number) => set((store: any) => ({
+        wallets: [...store.wallets, { publicKey, privateKey, name, id: store.wallets.length + 1, balance }]
     })),
     deleteWallets: () => set((store: any) => ({
         wallets: [],

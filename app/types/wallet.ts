@@ -6,5 +6,6 @@ export type Wallet = {
     privateKey: string,
     name: string,
     id: string,
-    coinType?: number
+    coinType?: number,
+    balance: number
 }

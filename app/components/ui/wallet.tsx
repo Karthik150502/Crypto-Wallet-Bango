@@ -24,7 +24,7 @@ import { COLORS_FOR_WALLET } from '@/lib/config'
 import PrivateHash from './privateHash'
 import { Toast } from '@/components/ui/toast'
 import { useToast } from '@/hooks/use-toast'
-export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) {
+export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, id, balance } }: { WalletInfo: Wallet }) {
 
 
     const [showPriv, setShowPriv] = useState(false);
@@ -66,6 +66,8 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
         })
     }, [])
 
+
+
     const DeleteWallet = (id: string) => {
         deleteWallet(id);
         toast.toast({
@@ -73,6 +75,7 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
             variant: "destructive"
         })
     }
+    console.log(balance)
 
     return (
         <motion.div
@@ -90,6 +93,7 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
             id={`wallet-sol-${id}`}
         >
             <div className="header w-full text-right flex items-center justify-between mb-2">
+                <p className='text-3xl'>&#36;{balance}</p>
                 <p className='text-4xl'>{name}</p>
 
 
