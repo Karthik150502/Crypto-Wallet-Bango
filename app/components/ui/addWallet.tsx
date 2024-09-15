@@ -97,7 +97,7 @@ export default function AddWallet() {
                         <DialogHeader>
                             <DialogTitle className='my-2'>Create new Wallet</DialogTitle>
                             <DialogDescription>
-                                <Input onChange={(event) => { handleChange(event) }} name='name' placeholder='_____ aka wallet.' className='placeholder:text-white text-white'></Input>
+                                <Input onChange={(event) => { handleChange(event) }} name='name' placeholder='Enter a name for the wallet.' className='placeholder:text-white text-white'></Input>
                                 <div className="w-full flex items-center justify-center my-4 ">
                                     <DialogClose>
                                         <Button onClick={() => createWallet()} className='bg-white hover:bg-slate-200 flex gap-x-2 text-black rounded-full'>Create Wallet<Plus /></Button>
