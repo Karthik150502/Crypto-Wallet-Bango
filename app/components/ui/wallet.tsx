@@ -32,7 +32,7 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
     const COLORS = COLORS_FOR_WALLET[Math.floor(Math.random() * COLORS_FOR_WALLET.length)]
     const color = useMotionValue(COLORS[0]);
     const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 35%, ${color})`
-    const privatehash = "****************************************************************************************"
+
 
     const copyPublic = () => {
         let timer;

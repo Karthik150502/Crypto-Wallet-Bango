@@ -7,8 +7,7 @@ import { motion } from 'framer-motion';
 import { useMnemonicStore, useWalletStore } from '@/app/zustand/store';
 
 import { getPublicKeyFromMnemonic } from '@/lib/client_actions';
-import { div } from 'framer-motion/client';
-import { Wallet } from '@/app/types/wallet';
+
 
 import {
     Dialog,

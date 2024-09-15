@@ -17,6 +17,7 @@ import AddWallet from './addWallet'
 import { Wallet } from '@/app/types/wallet'
 import WalletComp from './wallet'
 import { useWalletStore, useMnemonicStore } from '@/app/zustand/store'
+import WalletTypes from './walletTypes'
 
 export default function LandingHero() {
 
@@ -72,11 +73,11 @@ export default function LandingHero() {
                                     </DialogHeader>
                                 </DialogContent>
                             </Dialog>
-                        </> : <>
+                        </> : <div className='flex items-center justify-center'>
                             <p className='mx-2 text-sm text-center'>Or, if you are only getting Started</p>
                             <Button className='' onClick={() => generateMneMonics()}>Generate Wallet</Button>
-                        </>
 
+                        </div>
                 }
             </div>
             {

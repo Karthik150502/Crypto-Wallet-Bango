@@ -10,9 +10,10 @@ import { useEffect } from "react";
 import clsx from "clsx";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import logo from './../assets/bango-logo-zip-file/svg/logo-no-background.svg';
 export default function Home() {
 
-  const COLORS = ["#10E4E2", "#D19016", "#8FCE00", "#FF0096"]
+  const COLORS = ["#CB6ACA", "#8A67F1", "#F26BB2"]
   const color = useMotionValue(COLORS[0]);
   const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 35%, ${color})`
   const buttonColor = useMotionTemplate`radial-gradient(125% 125% at 0% 0%, #020617 0%, ${color})`
@@ -35,8 +36,8 @@ export default function Home() {
         backgroundImage
       }}
     >
-      <div className="header my-4">
-        <p className="dark:text-white text-8xl ">Bango</p>
+      <div className="header my-8">
+        <Image src={logo} alt="bango Logo" height={500} width={500}></Image>
       </div>
       <div className="hero text-center flex flex-col items-center gap-y-4">
         <p className="text-base">Welcome, use Bango and experience streamlined crypto management.</p>
