@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 import { motion } from 'framer-motion';
-
+import { LAMPORTS_PER_SOL, Connection, PublicKey, clusterApiUrl } from "@solana/web3.js"
 import { useMnemonicStore, useWalletStore } from '@/app/zustand/store';
 
-import { getPublicKeyFromMnemonic } from '@/lib/client_actions';
+import { getPublicKeyMnemonicSolana } from '@/lib/client_actions';
 
 
 import {
@@ -18,17 +18,20 @@ import {
     DialogTrigger,
     DialogClose
 } from "@/components/ui/dialog"
-
+import { getPublicKeyMnemonicEther } from '@/lib/ethers';
 import { Input } from '@/components/ui/input';
 export default function AddWallet() {
 
     const { mnemonic, editMnemonic } = useMnemonicStore();
     const { addWallet, wallets } = useWalletStore();
     const [walletName, setWalletName] = useState<string>('')
-
+    const QUICKNODE_RPC = 'https://example.solana.quiknode.pro/000000/'; // Replace with your QuickNode Endpoint OR clusterApiUrl('mainnet-beta')
+    const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
+    const WALLET_ADDRESS = 'YOUR_WALLET_ADDRESS'; //👈 Replace with your wallet address
 
     const createWallet = () => {
-        const { publicKey, privateKey } = getPublicKeyFromMnemonic(mnemonic, wallets.length + 1);
+        const { publicKey, privateKey } = getPublicKeyMnemonicSolana(mnemonic, wallets.length + 1);
+        // getPublicKeyMnemonicEther(mnemonic, wallets.length + 1);
         addWallet(publicKey, privateKey, walletName)
         console.log(publicKey, privateKey)
     }
