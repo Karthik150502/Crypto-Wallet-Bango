@@ -7,7 +7,7 @@ import { LAMPORTS_PER_SOL, Connection, PublicKey, clusterApiUrl } from "@solana/
 import { useMnemonicStore, useWalletStore } from '@/app/zustand/store';
 
 import { getPublicKeyMnemonicSolana } from '@/lib/client_actions';
-
+import { useToast } from '@/hooks/use-toast';
 
 import {
     Dialog,
@@ -20,8 +20,10 @@ import {
 } from "@/components/ui/dialog"
 import { getPublicKeyMnemonicEther } from '@/lib/ethers';
 import { Input } from '@/components/ui/input';
+import { Toaster } from "@/components/ui/toaster";
+import Link from 'next/link';
 export default function AddWallet() {
-
+    const toast = useToast();
     const { mnemonic, editMnemonic } = useMnemonicStore();
     const { addWallet, wallets } = useWalletStore();
     const [walletName, setWalletName] = useState<string>('')
@@ -29,12 +31,28 @@ export default function AddWallet() {
     const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
     const WALLET_ADDRESS = 'YOUR_WALLET_ADDRESS'; //👈 Replace with your wallet address
 
+
+
     const createWallet = () => {
-        const { publicKey, privateKey } = getPublicKeyMnemonicSolana(mnemonic, wallets.length + 1);
-        // getPublicKeyMnemonicEther(mnemonic, wallets.length + 1);
-        addWallet(publicKey, privateKey, walletName)
-        console.log(publicKey, privateKey)
+
+        try {
+            const { publicKey, privateKey } = getPublicKeyMnemonicSolana(mnemonic, wallets.length + 1);
+            addWallet(publicKey, privateKey, walletName)
+            toast.toast({
+                title: `Created wallet ${walletName}`,
+                variant: "default"
+            })
+            console.log(publicKey, privateKey)
+        } catch (e) {
+            toast.toast({
+                title: `Wallet not created`,
+                description: 'Wallet was not created due to some error'
+            })
+        }
     }
+
+
+
 
 
     const handleChange = (event: any) => {
@@ -52,6 +70,7 @@ export default function AddWallet() {
                 ease: "easeInOut",
             }}
             className='w-full' >
+
             <div className="header flex items-start justify-start">
                 <Dialog>
                     <DialogTrigger> <Button className='bg-teal-500 rounded-none hover:bg-teal-600 flex gap-x-2'>Add Wallet <Plus /></Button></DialogTrigger>

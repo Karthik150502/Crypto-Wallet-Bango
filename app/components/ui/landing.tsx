@@ -18,14 +18,14 @@ import { Wallet } from '@/app/types/wallet'
 import WalletComp from './wallet'
 import { useWalletStore, useMnemonicStore } from '@/app/zustand/store'
 import WalletTypes from './walletTypes'
-
+import { useToast } from '@/hooks/use-toast'
 export default function LandingHero() {
 
     const [walletCreated, SetWalletCreated] = useState<boolean>(false);
     const [seeds, setSeed] = useState<string[]>([])
     const { addWallet, wallets, deleteWallets } = useWalletStore();
     const { mnemonic, editMnemonic, eraseMnemonic } = useMnemonicStore();
-
+    const toast = useToast();
 
 
 
@@ -45,6 +45,10 @@ export default function LandingHero() {
     const deleteWallet = () => {
         eraseMnemonic()
         deleteWallets()
+        toast.toast({
+            title: "Wallet Deleted",
+            variant: "destructive"
+        })
         SetWalletCreated(false)
     }
 

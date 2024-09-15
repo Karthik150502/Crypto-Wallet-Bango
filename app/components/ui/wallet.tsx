@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/dialog"
 import { COLORS_FOR_WALLET } from '@/lib/config'
 import PrivateHash from './privateHash'
+import { Toast } from '@/components/ui/toast'
+import { useToast } from '@/hooks/use-toast'
 export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) {
 
 
@@ -32,6 +34,8 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
     const COLORS = COLORS_FOR_WALLET[Math.floor(Math.random() * COLORS_FOR_WALLET.length)]
     const color = useMotionValue(COLORS[0]);
     const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 35%, ${color})`
+
+    const toast = useToast();
 
 
     const copyPublic = () => {
@@ -64,6 +68,10 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
 
     const DeleteWallet = (id: string) => {
         deleteWallet(id);
+        toast.toast({
+            title: `Deleted wallet ${name}`,
+            variant: "destructive"
+        })
     }
 
     return (
@@ -78,7 +86,9 @@ export default function WalletComp({ publicKey, privateKey, name, id }: Wallet) 
             style={{
                 backgroundImage
             }}
-            className='lg:w-2/3 md:w-full sm:w-full h-auto flex flex-col items-center justify-center my-4 bg-black p-4 rounded-lg'>
+            className='lg:w-2/3 md:w-full sm:w-full h-auto flex flex-col items-center justify-center my-4 bg-black p-4 rounded-lg'
+            id={`wallet-sol-${id}`}
+        >
             <div className="header w-full text-right flex items-center justify-between mb-2">
                 <p className='text-4xl'>{name}</p>
 
