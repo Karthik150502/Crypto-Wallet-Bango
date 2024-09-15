@@ -78,7 +78,7 @@ export default function LandingHero() {
                                 </DialogContent>
                             </Dialog>
                         </> : <div className='flex items-center justify-center'>
-                            <p className='mx-2 text-sm text-center'>Or, if you are only getting Started</p>
+                            <p className='mx-2 text-sm text-center'>Or, if you are only getting started by creating a Solana Wallet.</p>
                             <Button className='' onClick={() => generateMneMonics()}>Generate Wallet</Button>
 
                         </div>

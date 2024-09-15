@@ -94,7 +94,7 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
         >
             <div className="header w-full text-right flex items-center justify-between mb-2">
                 <p className='text-3xl'>&#36;{balance}</p>
-                <p className='text-4xl'>{name}</p>
+                <p className='text-3xl text-center text-ellipsis overflow-hidden text-wrap w-2/3'>{name}</p>
 
 
                 <Dialog>
@@ -116,11 +116,11 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
             </div>
             <div className="cont flex flex-col items-start justify-start gap-y-2 w-full">
                 <div className='flex flex-col items-start justify-start w-full'>
-                    <p className='text-xl flex gap-x-2 items-center'>Public Key {copied ? <CopyCheck size={18} /> : <Copy onClick={() => copyPublic()} size={18} />}</p>
+                    <p className='text-xl flex gap-x-2 items-center'>Public Key {copied ? <CopyCheck size={18} /> : <Copy onClick={() => copyPublic()} size={18} className='cursor-pointer' />}</p>
                     <p className='text-xs w-2/3 h-auto text-wrap text-ellipsis overflow-hidden'>{publicKey}</p>
                 </div>
                 <div className='flex flex-col items-start justify-start relative w-full'>
-                    <p className='text-xl flex gap-x-2 items-center'>Private Key {copiedPriv ? <CopyCheck size={18} /> : <Copy onClick={() => copyPrivate()} size={18} />}</p>
+                    <p className='text-xl flex gap-x-2 items-center'>Private Key {copiedPriv ? <CopyCheck size={18} /> : <Copy onClick={() => copyPrivate()} size={18} className='cursor-pointer' />}</p>
                     <div className="flex w-full items-center justify-between">
 
                         {
@@ -128,7 +128,7 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
                         }
 
                         {
-                            showPriv ? (<Eye onClick={() => setShowPriv(false)} size={18} />) : <EyeOff onClick={() => setShowPriv(true)} size={18} />
+                            showPriv ? (<Eye onClick={() => setShowPriv(false)} size={18} className='cursor-pointer' />) : <EyeOff onClick={() => setShowPriv(true)} size={18} className='cursor-pointer' />
                         }
                     </div>
                 </div>
