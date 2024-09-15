@@ -7,10 +7,11 @@ import {
   animate
 } from "framer-motion";
 import { useEffect } from "react";
-import clsx from "clsx";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import logo from './../assets/bango-logo-zip-file/svg/logo-no-background.svg';
+import { ExternalLink } from "lucide-react";
 export default function Home() {
 
   const COLORS = ["#CB6ACA", "#8A67F1", "#F26BB2"]
@@ -56,6 +57,7 @@ export default function Home() {
           <ArrowRight strokeWidth={1} size={15} className="ml-1" />
         </motion.button>
       </div>
+      <Link href={"https://github.com/Karthik150502/Crypto-Wallet-Bango/tree/master"} className="text-sm text-white flex items-center justify-center gap-x-1 absolute bottom-4 right-4" target="_blank">Open Source <ExternalLink strokeWidth={2} size={18} /></Link>
     </motion.div>
   );
 }
