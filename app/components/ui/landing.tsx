@@ -62,7 +62,7 @@ export default function LandingHero() {
                         <>
 
                             <Dialog>
-                                <DialogTrigger> <Button className=''>Delete Wallet</Button>
+                                <DialogTrigger> <Button className=''>Remove Wallet</Button>
                                 </DialogTrigger>
                                 <DialogContent className='bg-gradient-to-r from-lime-600 border-none'>
                                     <DialogHeader>
