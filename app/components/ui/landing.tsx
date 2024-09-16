@@ -13,12 +13,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import SecretPhrase from './secretPhrase'
-import AddWallet from './addWallet'
-import { Wallet } from '@/app/types/wallet'
-import WalletComp from './wallet'
 import { useWalletStore, useMnemonicStore } from '@/app/zustand/store'
-import WalletTypes from './walletTypes'
 import { useToast } from '@/hooks/use-toast'
+import SolanaWallet from './solanaWallet'
 export default function LandingHero() {
 
     const [walletCreated, SetWalletCreated] = useState<boolean>(false);
@@ -55,14 +52,14 @@ export default function LandingHero() {
 
     return (
         <div className='flex flex-col items-center justify-center w-full'>
-            <div className="starter flex items-center gap-x-2 my-4 w-full">
-                <Button className='' >Import Wallet</Button>
+            <div className="starter flex items-center gap-x-2 my-4 w-full justify-center">
+                <Button className='rounded-full' >Import Wallet</Button>
                 {
-                    walletCreated ?
+                    mnemonic ?
                         <>
 
                             <Dialog>
-                                <DialogTrigger> <Button className=''>Remove Wallet</Button>
+                                <DialogTrigger> <Button className='rounded-full bg-red-500'>Remove Wallet</Button>
                                 </DialogTrigger>
                                 <DialogContent className='bg-gradient-to-r from-lime-600 border-none'>
                                     <DialogHeader>
@@ -77,24 +74,19 @@ export default function LandingHero() {
                                     </DialogHeader>
                                 </DialogContent>
                             </Dialog>
-                        </> : <div className='flex items-center justify-center'>
-                            <p className='mx-2 text-sm text-center'>Or, if you are only getting started by creating a Solana Wallet.</p>
-                            <Button className='' onClick={() => generateMneMonics()}>Generate Wallet</Button>
-
-                        </div>
+                        </> : (
+                            <div className='flex items-center justify-center'>
+                                <p className='mx-2 text-sm text-center'> Or Start by creating a Wallet</p>
+                                <Button className='rounded-full' onClick={() => generateMneMonics()}>Generate Wallet</Button>
+                            </div>
+                        )
                 }
             </div>
             {
-                walletCreated ? <>
+                mnemonic && <>
                     <SecretPhrase secretPhrase={seeds} />
-                    <AddWallet />
-                </> : <></>
-            }
-
-            {
-                wallets && walletCreated && wallets.map((wallet) => {
-                    return <WalletComp key={wallet.publicKey} WalletInfo={wallet} />
-                })
+                    <SolanaWallet />
+                </>
             }
         </div >
     )

@@ -41,9 +41,7 @@ export default function AddWallet() {
     const { mnemonic, editMnemonic } = useMnemonicStore();
     const { addWallet, wallets } = useWalletStore();
     const [walletName, setWalletName] = useState<string>('')
-    const QUICKNODE_RPC = 'https://example.solana.quiknode.pro/000000/'; // Replace with your QuickNode Endpoint OR clusterApiUrl('mainnet-beta')
-    const SOLANA_CONNECTION = new Connection(QUICKNODE_RPC);
-    const WALLET_ADDRESS = 'YOUR_WALLET_ADDRESS'; //👈 Replace with your wallet address
+
 
 
 
@@ -51,9 +49,7 @@ export default function AddWallet() {
 
         try {
             const { publicKey, privateKey } = getPublicKeyMnemonicSolana(mnemonic, wallets.length + 1);
-
             let walletInfo = await getSolBalance(publicKey);
-            console.log(walletInfo)
 
 
             addWallet(publicKey, privateKey, walletName, walletInfo.value)
@@ -65,7 +61,8 @@ export default function AddWallet() {
         } catch (e) {
             toast.toast({
                 title: `Wallet not created`,
-                description: 'Wallet was not created due to some error'
+                description: 'Wallet was not created due to some error',
+                variant: "destructive"
             })
         }
     }
@@ -88,11 +85,11 @@ export default function AddWallet() {
                 duration: 0.3,
                 ease: "easeInOut",
             }}
-            className='w-full' >
+            className='w-full flex items-center justify-center' >
 
             <div className="header flex items-start justify-start">
                 <Dialog>
-                    <DialogTrigger> <Button className='bg-teal-500 rounded-none hover:bg-teal-600 flex gap-x-2'>Add Wallet <Plus /></Button></DialogTrigger>
+                    <DialogTrigger> <Button className='bg-teal-500 rounded-full hover:bg-teal-600 flex gap-x-2'>Add Wallet <Plus /></Button></DialogTrigger>
                     <DialogContent className='bg-gradient-to-r from-teal-500 border-none'>
                         <DialogHeader>
                             <DialogTitle className='my-2'>Create new Wallet</DialogTitle>

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { Wallet } from '@/app/types/wallet'
-import { Eye, EyeOff, Copy, CopyCheck, Trash } from 'lucide-react'
+import { Eye, EyeOff, Copy, CopyCheck, Trash, RotateCcwIcon as RotateIcon, } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { useWalletStore } from '@/app/zustand/store'
 
@@ -31,6 +31,9 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
     const [copied, setCopied] = useState(false);
     const [copiedPriv, setCopiedPriv] = useState(false);
     const { deleteWallet } = useWalletStore()
+
+
+    // Styling props
     const COLORS = COLORS_FOR_WALLET[Math.floor(Math.random() * COLORS_FOR_WALLET.length)]
     const color = useMotionValue(COLORS[0]);
     const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 35%, ${color})`
@@ -75,7 +78,6 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
             variant: "destructive"
         })
     }
-    console.log(balance)
 
     return (
         <motion.div
@@ -93,19 +95,23 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
             id={`wallet-sol-${id}`}
         >
             <div className="header w-full text-right flex items-center justify-between mb-2">
-                <p className='text-3xl'>&#36;{balance}</p>
-                <p className='text-3xl text-center text-ellipsis overflow-hidden text-wrap w-2/3'>{name}</p>
+                <p className='text-3xl'>{balance} SOL</p>
+                <p className='text-3xl text-center cursor-pointer text-ellipsis overflow-hidden text-wrap w-2/3 flex items-center gap-x-2' >{name} <RotateIcon onClick={() => {
+                    console.log("Wallet clicked.")
+                }} strokeWidth={2} /></p>
 
 
                 <Dialog>
-                    <DialogTrigger><Trash strokeWidth={1} size={20} /></DialogTrigger>
+                    <DialogTrigger onClick={(event) => { event?.stopPropagation() }} ><Trash strokeWidth={1} size={20} /></DialogTrigger>
                     <DialogContent className='bg-gradient-to-r from-teal-500 border-none'>
                         <DialogHeader>
                             <DialogTitle className='my-2'>Delete Wallet {name}?</DialogTitle>
                             <DialogDescription>
                                 <div className="w-full flex items-center justify-center animate-pulse">
                                     <DialogClose>
-                                        <Button onClick={() => DeleteWallet(id)} className='bg-red-500  hover:bg-red-600 flex gap-x-2 text-black rounded-full'>Delete Wallet? </Button>
+                                        <Button onClick={() => {
+                                            DeleteWallet(id)
+                                        }} className='bg-red-500  hover:bg-red-600 flex gap-x-2 text-black rounded-full'>Delete Wallet? </Button>
                                     </DialogClose>
                                 </div>
                             </DialogDescription>
@@ -116,11 +122,17 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
             </div>
             <div className="cont flex flex-col items-start justify-start gap-y-2 w-full">
                 <div className='flex flex-col items-start justify-start w-full'>
-                    <p className='text-xl flex gap-x-2 items-center'>Public Key {copied ? <CopyCheck size={18} /> : <Copy onClick={() => copyPublic()} size={18} className='cursor-pointer' />}</p>
+                    <p className='text-xl flex gap-x-2 items-center'>Public Key {copied ? <CopyCheck size={18} /> : <Copy onClick={(event) => {
+                        event?.stopPropagation()
+                        copyPublic()
+                    }} size={18} className='cursor-pointer' />}</p>
                     <p className='text-xs w-2/3 h-auto text-wrap text-ellipsis overflow-hidden'>{publicKey}</p>
                 </div>
                 <div className='flex flex-col items-start justify-start relative w-full'>
-                    <p className='text-xl flex gap-x-2 items-center'>Private Key {copiedPriv ? <CopyCheck size={18} /> : <Copy onClick={() => copyPrivate()} size={18} className='cursor-pointer' />}</p>
+                    <p className='text-xl flex gap-x-2 items-center'>Private Key {copiedPriv ? <CopyCheck size={18} /> : <Copy onClick={(event) => {
+                        event?.stopPropagation()
+                        copyPrivate()
+                    }} size={18} className='cursor-pointer' />}</p>
                     <div className="flex w-full items-center justify-between">
 
                         {
@@ -128,7 +140,13 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
                         }
 
                         {
-                            showPriv ? (<Eye onClick={() => setShowPriv(false)} size={18} className='cursor-pointer' />) : <EyeOff onClick={() => setShowPriv(true)} size={18} className='cursor-pointer' />
+                            showPriv ? (<Eye onClick={(event) => {
+                                event?.stopPropagation()
+                                setShowPriv(false)
+                            }} size={18} className='cursor-pointer' />) : <EyeOff onClick={(event) => {
+                                event?.stopPropagation()
+                                setShowPriv(true)
+                            }} size={18} className='cursor-pointer' />
                         }
                     </div>
                 </div>
