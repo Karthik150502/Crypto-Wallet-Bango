@@ -5,6 +5,6 @@ export abstract class SolanaUtilAbs {
 
 
 
-    getBalance(publicKey: string): Promise<number> { };
+    public abstract getBalance(publicKey: string): Promise<number>;
 
 } 

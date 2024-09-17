@@ -22,15 +22,10 @@ export class SolanaUtils implements SolanaUtilAbs {
         if (!this.instance) {
             this.instance = new Connection(this.rpc);
         }
-
         return this.instance
     }
-
 
     public getBalance(publicKey: string): Promise<number> {
         return SolanaUtils.getInstance().getBalance(new PublicKey(publicKey))
     }
-
-
-
 }
