@@ -8,15 +8,19 @@ import { SolanaUtilAbs } from './solanaAbs'
 
 export class SolanaUtils implements SolanaUtilAbs {
 
-    private static instance: Connection | undefined;
-
+    private static instance: Connection;
+    private static rpc: string;
 
     private constructor() {
     }
 
-    public static getInstance(rpcEndpoint: string) {
+    public static setRpc(rpcString: string) {
+        this.rpc = rpcString
+    }
+
+    public static getInstance() {
         if (!this.instance) {
-            this.instance = new Connection(rpcEndpoint);
+            this.instance = new Connection(this.rpc);
         }
 
         return this.instance
@@ -24,7 +28,7 @@ export class SolanaUtils implements SolanaUtilAbs {
 
 
     public getBalance(publicKey: string): Promise<number> {
-        return this.instance?.getBalance(new PublicKey(publicKey))
+        return SolanaUtils.getInstance().getBalance(new PublicKey(publicKey))
     }
 
 
