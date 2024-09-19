@@ -56,6 +56,9 @@ export default function LandingHero() {
         <div className='flex flex-col items-center justify-center w-full'>
             <div className="starter flex items-center gap-x-2 my-4 w-full justify-center">
                 <Button className='rounded-full' >Import Wallet</Button>
+                <Button className='rounded-full' onClick={() => {
+                    router.push("/token-launchpad")
+                }}>Open Token Launcpad</Button>
                 {
                     mnemonic ?
                         <>
@@ -80,9 +83,7 @@ export default function LandingHero() {
                             <div className='flex items-center justify-between px-4 gap-x-2'>
                                 <p className='mx-2 text-sm text-center'> Or Start by creating a Wallet</p>
                                 <Button className='rounded-full' onClick={() => generateMneMonics()}>Generate Wallet</Button>
-                                <Button className='rounded-full' onClick={() => {
-                                    router.push("/token-launchpad")
-                                }}>Open Token Launcpad</Button>
+
 
                             </div>
                         )
