@@ -7,3 +7,8 @@ export type SolanaBalance = {
     id: number,
     jsonrpc: string
 }
+
+export type SolanaWallet = {
+    publicKey: string,
+    balance: number
+}

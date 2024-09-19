@@ -16,6 +16,7 @@ import SecretPhrase from './secretPhrase'
 import { useWalletStore, useMnemonicStore } from '@/app/zustand/store'
 import { useToast } from '@/hooks/use-toast'
 import SolanaWallet from './solanaWallet'
+import { useRouter } from 'next/navigation'
 export default function LandingHero() {
 
     const [walletCreated, SetWalletCreated] = useState<boolean>(false);
@@ -23,6 +24,7 @@ export default function LandingHero() {
     const { addWallet, wallets, deleteWallets } = useWalletStore();
     const { mnemonic, editMnemonic, eraseMnemonic } = useMnemonicStore();
     const toast = useToast();
+    const router = useRouter();
 
 
 
@@ -75,9 +77,13 @@ export default function LandingHero() {
                                 </DialogContent>
                             </Dialog>
                         </> : (
-                            <div className='flex items-center justify-center'>
+                            <div className='flex items-center justify-between px-4 gap-x-2'>
                                 <p className='mx-2 text-sm text-center'> Or Start by creating a Wallet</p>
                                 <Button className='rounded-full' onClick={() => generateMneMonics()}>Generate Wallet</Button>
+                                <Button className='rounded-full' onClick={() => {
+                                    router.push("/token-launchpad")
+                                }}>Open Token Launcpad</Button>
+
                             </div>
                         )
                 }

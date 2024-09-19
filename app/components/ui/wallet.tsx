@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react'
 import { Wallet } from '@/app/types/wallet'
 import { Eye, EyeOff, Copy, CopyCheck, Trash, RotateCcwIcon as RotateIcon, } from 'lucide-react'
-import { motion } from 'framer-motion'
 import { useWalletStore } from '@/app/zustand/store'
 
 import {
+    motion,
     useMotionTemplate,
     useMotionValue,
     animate
