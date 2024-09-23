@@ -5,7 +5,9 @@ export const metadata: Metadata = {
     title: "Bango",
     description: "Streamlined Crypto Transactions",
 };
+// wallet adapter imports
 
+import '@solana/wallet-adapter-react-ui/styles.css';
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -13,12 +15,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${montserrat400.className} antialiased`}
-            >
+            <body className={`${montserrat400.className} antialiased`}>
                 {children}
                 <Toaster />
             </body>
-        </html>
+        </html >
     );
 }
