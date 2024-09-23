@@ -1,12 +1,14 @@
 import React from 'react'
 import TokenLanchpadForm from '@/app/components/tokenLaunchpad/form'
 import Image from 'next/image'
+
+import "./styles.css"
 export default function page() {
   return (
     <div className='p-4 flex items-center relative flex-col justify-center min-h-screen bg-transparent'>
-      <Image src="https://wallpapercave.com/w/wp9116463.jpg" alt="space background" height={720} width={1080} className="-z-10 absolute w-screen h-screen"></Image>
+      <Image src="https://wallpapercave.com/w/wp9116463.jpg" alt="space background" height={720} width={1080} className="bg-move -z-10 absolute w-screen h-screen"></Image>
       <p className='text-7xl font-extrabold'>Solana Token Launchpad</p>
       <TokenLanchpadForm />
-    </div>
+    </div >
   )
 }

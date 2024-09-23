@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { Wallet } from '@/app/types/wallet'
-import { Eye, EyeOff, Copy, CopyCheck, Trash, RotateCcwIcon as RotateIcon, } from 'lucide-react'
+import { Eye, EyeOff, Copy, CopyCheck, Trash, RotateCcwIcon as RotateIcon, BookOpen } from 'lucide-react'
 import { useWalletStore } from '@/app/zustand/store'
 
 import {
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog"
 import { COLORS_FOR_WALLET } from '@/lib/config'
 import PrivateHash from './privateHash'
-import { Toast } from '@/components/ui/toast'
+import { useRouter } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
 export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, id, balance } }: { WalletInfo: Wallet }) {
 
@@ -31,7 +31,7 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
     const [copied, setCopied] = useState(false);
     const [copiedPriv, setCopiedPriv] = useState(false);
     const { deleteWallet } = useWalletStore()
-
+    const router = useRouter()
 
     // Styling props
     const COLORS = COLORS_FOR_WALLET[Math.floor(Math.random() * COLORS_FOR_WALLET.length)]
@@ -95,10 +95,10 @@ export default function WalletComp({ WalletInfo: { publicKey, privateKey, name, 
             id={`wallet-sol-${id}`}
         >
             <div className="header w-full text-right flex items-center justify-between mb-2">
-                <p className='text-3xl'>{balance} SOL</p>
-                <p className='text-3xl text-center cursor-pointer text-ellipsis overflow-hidden text-wrap w-2/3 flex items-center gap-x-2' >{name} <RotateIcon onClick={() => {
-                    console.log("Wallet clicked.")
-                }} strokeWidth={2} /></p>
+                <p className='text-3xl text-center cursor-pointer text-ellipsis overflow-hidden text-wrap w-2/3 flex items-center gap-x-2' >{name} <BookOpen onClick={() => {
+                    router.push(`/walletView/solana/${publicKey}`)
+                }} strokeWidth={2} className='animate-pulse coursor-pointer' /></p>
+                <p className='text-3xl'>{balance.toPrecision(3)} SOL</p>
 
 
                 <Dialog>

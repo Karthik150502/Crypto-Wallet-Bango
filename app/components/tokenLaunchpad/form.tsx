@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import Button from '../ui/button'
 import React, { useState } from 'react';
 import "./styles.css"
-import { getAccount } from '@/app/packages/solanToken';
+import { getAccount } from '@/app/packages/Solana/solanToken';
 import { LAMPORTS_PER_SOL } from '@solana/web3.js';
 import SolanaAccountDisplay from '../ui/solanaAccountDisplay';
 import { SolanaWallet } from '@/app/types/solana';
@@ -36,15 +36,18 @@ export default function TokenLanchpadForm() {
 
         try {
             let res = await getAccount(formData.walletaddr);
+
             setWalletInfo((prev) => ({
                 publicKey: formData.walletaddr,
-                balance: res?.lamports ? (res?.lamports / LAMPORTS_PER_SOL) : 0
+                balance: res?.lamports ? (res?.lamports / LAMPORTS_PER_SOL) : 0,
+                executable: res?.executable
             }))
             console.log(res)
             console.log(walletInfo)
             toast.toast({
-                title: "Fetched wallet.",
-                variant: "default"
+                title: `Fetched wallet.`,
+                description: `Wallet ${formData.walletaddr}`,
+                variant: "default",
             })
         } catch (e) {
             console.log(e)
@@ -64,7 +67,7 @@ export default function TokenLanchpadForm() {
 
     return (
         <form onSubmit={handleSubmit} className='glass-bg flex flex-col items-center justify-center p-4 rounded-lg gap-y-4 min-w-fit'>
-            <label htmlFor="" className='flex flex-col items-start gap-y-2 justify-start'>
+            <label htmlFor="" className='flex flex-col items-center gap-y-2 justify-start'>
                 <p className='text-xs ml-3'>Wallet Address</p>
                 <Input type='text' name='walletaddr' className='placeholder:text-slate-500 rounded-full p-2 w-full bg-slate-950 text-xs' placeholder='Enter the Wallet Address' onChange={(event) => {
                     handleChange(event.target.name, event.target.value)
@@ -74,6 +77,8 @@ export default function TokenLanchpadForm() {
             {
                 walletInfo.publicKey && <SolanaAccountDisplay {...walletInfo} />
             }
+
+
         </form>
     )
 }

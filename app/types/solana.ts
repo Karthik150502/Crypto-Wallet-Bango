@@ -10,5 +10,6 @@ export type SolanaBalance = {
 
 export type SolanaWallet = {
     publicKey: string,
-    balance: number
+    balance: number,
+    executable?: boolean
 }

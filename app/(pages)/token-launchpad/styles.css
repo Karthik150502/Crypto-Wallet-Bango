@@ -1,0 +1,13 @@
+.bg-move {
+    animation: moveIt 10s linear infinite;
+}
+
+@keyframes moveIt {
+    from {
+        background-position: bottom left;
+    }
+
+    to {
+        background-position: top right;
+    }
+}
