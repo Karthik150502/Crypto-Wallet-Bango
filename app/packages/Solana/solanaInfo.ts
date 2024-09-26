@@ -18,6 +18,5 @@ export async function getWalletInfo(pubKey: string) {
         params: [pubKeyBase58]
     })
 
-    console.log(res)
     return res
 }

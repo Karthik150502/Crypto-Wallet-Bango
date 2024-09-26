@@ -40,9 +40,10 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
 
     const [solanaToAirdrop, setSolanAirdropAmount] = useState<number>(0);
     const [walletPrivateKey, setWalletPrivateKey] = useState<string>('');
-
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const airdrop = async () => {
         try {
+            setIsLoading(true);
             let res = await airDropSol(publicKey, solanaToAirdrop)
             console.log(res)
             toast.toast({
@@ -57,6 +58,8 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
                 description: "",
                 variant: "destructive"
             })
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -70,7 +73,7 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
 
         let walletPublic;
         try {
-
+            setIsLoading(true)
             let payer = Keypair.fromSecretKey(bs58.decode(walletPrivateKey));
             let mintAuth = payer;
             let walletPublic = mintAuth.publicKey;
@@ -88,6 +91,8 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
                 description: `Fialed creating the Mint.`,
                 variant: "destructive"
             })
+        } finally {
+            setIsLoading(false)
         }
     }
     return (
@@ -110,7 +115,7 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
             <div className='w-full flex items-center justify-evenly gap-x-1'>
 
                 <Dialog>
-                    <DialogTrigger ><Button className='mx-auto'>Create Mint</Button></DialogTrigger>
+                    <DialogTrigger disabled={isLoading}><Button className='mx-auto' >Create Mint</Button></DialogTrigger>
                     <DialogContent className='bg-gradient-to-r from-green-500 border-none'>
                         <DialogHeader>
                             <DialogTitle className='my-2'>Create Mint Token.</DialogTitle>
@@ -126,7 +131,7 @@ export default function SolanaAccountDisplay({ publicKey, balance, executable }:
                     </DialogContent>
                 </Dialog>
                 <Dialog>
-                    <DialogTrigger> <Button className='mx-auto'>Airdrop some Solana</Button></DialogTrigger>
+                    <DialogTrigger disabled={isLoading}> <Button className='mx-auto' >Airdrop some Solana</Button></DialogTrigger>
                     <DialogContent className='bg-gradient-to-r from-yellow-500 border-none'>
                         <DialogHeader>
                             <DialogTitle className='my-2'>Create new Wallet</DialogTitle>

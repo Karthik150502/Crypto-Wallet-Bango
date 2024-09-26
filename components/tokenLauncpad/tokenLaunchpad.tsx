@@ -4,13 +4,18 @@ import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { createInitializeMint2Instruction, getMinimumBalanceForRentExemptMint, MINT_SIZE } from '@solana/spl-token'
 import { useToast } from '@/hooks/use-toast'
-import Button from '@/app/components/ui/button'
-import { Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
+import { Button } from '../ui/button'
+import { clusterApiUrl, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { useConnection } from '@solana/wallet-adapter-react'
 import Image from 'next/image'
 import logo from '@/assets/Solana/solanaLogoMark.svg'
 
+import { Connection, Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
+import { createMint, getOrCreateAssociatedTokenAccount, mintTo, setAuthority, transfer } from "@solana/spl-token";
+import WalletAdapterBrewed from '../ui/walletAdapter'
+import WalletTypes from '@/app/components/ui/walletTypes'
+import SendSolana from '../sendSolana/sendSolana'
 export default function SolanaTokenLaunchpad() {
 
 
@@ -30,30 +35,32 @@ export default function SolanaTokenLaunchpad() {
 
 
     const createToken = async () => {
-        // if (!wallet) {
-        //     toast.toast({
-        //         title: "Kindly connect to the wallet",
-        //         variant: "destructive"
-        //     })
-        //     return
-        // }
-        // const lamports = await getMinimumBalanceForRentExemptMint(connection);
-        // const keypair = Keypair.generate();
+        if (!wallet) {
+            toast.toast({
+                title: "Kindly connect to the wallet",
+                variant: "destructive"
+            })
+            return
+        }
+        wallet.publicKey
+        let connectionRaw = new Connection(clusterApiUrl("devnet"), "confirmed")
+        const lamports = await getMinimumBalanceForRentExemptMint(connectionRaw);
+        const keypair = Keypair.generate();
 
-        // const transaction = new Transaction().add(
-        //     SystemProgram.createAccount({
-        //         fromPubkey: new PublicKey("Signer Public Key"),
-        //         newAccountPubkey: keypair.publicKey,
-        //         space: MINT_SIZE,
-        //         lamports,
-        //         programId: TOKEN_PROGRAM_ID,
-        //     }),
-        //     createInitializeMint2Instruction(keypair.publicKey, Number(decimals), new PublicKey("Signer Public Key"), new PublicKey("Signer Public Key"), TOKEN_PROGRAM_ID)
-        // );
+        const transaction = new Transaction().add(
+            SystemProgram.createAccount({
+                fromPubkey: wallet.publicKey!,
+                newAccountPubkey: keypair.publicKey,
+                space: MINT_SIZE,
+                lamports,
+                programId: TOKEN_PROGRAM_ID,
+            }),
+            createInitializeMint2Instruction(keypair.publicKey, Number(decimals), wallet.publicKey!, wallet.publicKey!, TOKEN_PROGRAM_ID)
+        );
 
-        // transaction.partialSign(keypair)
-        // wallet.signTransaction(transaction)
-        // return keypair.publicKey;
+        transaction.partialSign(keypair)
+        wallet.signTransaction(transaction)
+        return keypair.publicKey;
     }
 
 
